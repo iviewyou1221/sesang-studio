@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>세상만사 650자 대본 & 개별 마케팅 스튜디오</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen p-4 md:p-8 font-sans">
+  <div class="max-w-4xl mx-auto space-y-6">
+
+    <!-- Header -->
+    <header class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-amber-500 text-slate-950 font-bold p-3 rounded-xl text-xl tracking-wider">世</div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-xl md:text-2xl font-bold text-white">세상만사</h1>
+            <span class="bg-amber-500/10 text-amber-400 text-xs px-2.5 py-1 rounded-full border border-amber-500/20 font-medium">650자 포맷 Studio</span>
+          </div>
+          <p class="text-xs md:text-sm text-slate-400 mt-1">생활법률 · 사회이슈 숏폼 대본 & 개별 마케팅 세트 자동화</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 text-xs bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 text-slate-300">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>OpenAI GPT-4o Engine</span>
+      </div>
+    </header>
+
+    <!-- Input Section -->
+    <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+      <div class="flex justify-between items-center">
+        <label class="text-sm font-semibold text-amber-400 flex items-center gap-2">
+          <i data-lucide="edit-3" class="w-4 h-4"></i> 사건 / 뉴스 주제 입력
+        </label>
+        <button onclick="setSample()" class="text-xs text-slate-400 hover:text-slate-200 transition">샘플 주제 넣기</button>
+      </div>
+      <textarea id="topicInput" rows="3" placeholder="예: 아파트 주차장에서 2칸을 혼자 차지한 차에 경고 스티커를 붙였다가 무고죄와 명예훼손으로 고소당한 사건" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-amber-500 transition resize-none"></textarea>
+      
+      <button onclick="generateAll()" id="generateBtn" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold py-3.5 px-6 rounded-xl transition shadow-lg flex items-center justify-center gap-2">
+        <i data-lucide="sparkles" class="w-5 h-5"></i> 전체 한 번에 AI 생성하기
+      </button>
+    </section>
+
+    <!-- Full Script Output -->
+    <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-3">
+          <h2 class="text-sm font-semibold text-amber-400 flex items-center gap-2">
+            <i data-lucide="file-text" class="w-4 h-4"></i> 통합 대본 전문
+          </h2>
+          <span id="charCount" class="text-xs text-slate-500 bg-slate-950 px-2.5 py-1 rounded-md border border-slate-800">0 / 650자</span>
+        </div>
+        <button onclick="copyText('scriptOutput')" class="text-xs bg-amber-500/10 text-amber-400 border border-amber-500/20 px-3 py-1.5 rounded-lg hover:bg-amber-500/20 transition flex items-center gap-1.5 font-medium">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i> 전문 복사
+        </button>
+      </div>
+      <div id="scriptOutput" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-5 text-slate-300 min-h-[160px] whitespace-pre-wrap leading-relaxed text-sm">생성된 650자 순수 대본이 여기에 6단계 구조에 맞춰 나타납니다.</div>
+    </section>
+
+    <!-- Marketing Modules Grid -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      
+      <!-- 3-line Thumbnail -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
+        <div class="flex justify-between items-center">
+          <h3 class="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+            <i data-lucide="image" class="w-4 h-4 text-amber-400"></i> 3줄 썸네일 카피
+          </h3>
+          <button onclick="copyText('thumbOutput')" class="text-xs text-slate-400 hover:text-slate-200">복사</button>
+        </div>
+        <div id="thumbOutput" class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-slate-300 text-xs min-h-[80px] whitespace-pre-wrap">1줄: 자극적 후킹\n2줄: 사건 핵심요약\n3줄: 궁금증 유발 질문</div>
+      </div>
+
+      <!-- Title Recommendations -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
+        <div class="flex justify-between items-center">
+          <h3 class="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+            <i data-lucide="heading" class="w-4 h-4 text-amber-400"></i> 제목 추천 (5종)
+          </h3>
+          <button onclick="copyText('titleOutput')" class="text-xs text-slate-400 hover:text-slate-200">복사</button>
+        </div>
+        <div id="titleOutput" class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-slate-300 text-xs min-h-[80px] whitespace-pre-wrap">1. 틱톡/숏츠용 알고리즘 추천 제목 5개가 표시됩니다.</div>
+      </div>
+
+      <!-- Hashtags -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
+        <div class="flex justify-between items-center">
+          <h3 class="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+            <i data-lucide="hash" class="w-4 h-4 text-amber-400"></i> 맞춤 해시태그
+          </h3>
+          <button onclick="copyText('tagOutput')" class="text-xs text-slate-400 hover:text-slate-200">복사</button>
+        </div>
+        <div id="tagOutput" class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-slate-300 text-xs min-h-[80px] whitespace-pre-wrap">#세상만사 #이슈 #숏폼해시태그</div>
+      </div>
+
+      <!-- Detailed Breakdown -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
+        <div class="flex justify-between items-center">
+          <h3 class="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+            <i data-lucide="list-checks" class="w-4 h-4 text-amber-400"></i> 세부 내용 요약 (네이버 블로그용)
+          </h3>
+          <button onclick="copyText('detailOutput')" class="text-xs text-slate-400 hover:text-slate-200">복사</button>
+        </div>
+        <div id="detailOutput" class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 text-slate-300 text-xs min-h-[80px] whitespace-pre-wrap">사건 개요, 법률 판단 기준, 실생활 주의사항 정리</div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function setSample() {
+      document.getElementById('topicInput').value = "아파트 주차장에서 2칸을 혼자 차지한 차에 경고 스티커를 붙였다가 무고죄와 명예훼손으로 고소당한 사건";
+    }
+
+    function copyText(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text);
+      alert('복사되었습니다!');
+    }
+
+    async function generateAll() {
+      const topic = document.getElementById('topicInput').value.trim();
+      if (!topic) {
+        alert('주제를 입력해 주세요!');
+        return;
+      }
+
+      const btn = document.getElementById('generateBtn');
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i> 생성 중...`;
+      lucide.createIcons();
+
+      try {
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ topic })
+        });
+
+        const data = await response.json();
+
+        if (data.error) {
+          alert('생성 중 오류 발생: ' + data.error);
+          return;
+        }
+
+        document.getElementById('scriptOutput').innerText = data.script || '';
+        document.getElementById('charCount').innerText = `${(data.script || '').length} / 650자`;
+        document.getElementById('thumbOutput').innerText = data.thumbnail || '';
+        document.getElementById('titleOutput').innerText = data.titles || '';
+        document.getElementById('tagOutput').innerText = data.hashtags || '';
+        document.getElementById('detailOutput').innerText = data.details || '';
+
+      } catch (err) {
+        alert('통신 오류가 발생했습니다. Vercel 서버 설정을 확인해 주세요.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="sparkles" class="w-5 h-5"></i> 전체 한 번에 AI 생성하기`;
+        lucide.createIcons();
+      }
+    }
+  </script>
+</body>
+</html>
