@@ -19,20 +19,24 @@
       <h1 class="text-3xl font-extrabold text-blue-400 flex items-center justify-center gap-2">
         <i class="fa-solid fa-bolt text-yellow-400"></i> 세상만사 AI 콘텐츠 스튜디오
       </h1>
-      <p class="text-slate-400 mt-2 text-sm">주제 하나로 숏폼 대본, 썸네일, 제목, 해시태그, 블로그 포스팅까지 완성!</p>
+      <p class="text-slate-400 mt-2 text-sm">주제나 기사를 복사해서 넣으면 숏폼 대본부터 블로그 포스팅까지 완벽 생성!</p>
     </header>
 
-    <!-- 입력 폼 -->
-    <section class="bg-slate-800/80 backdrop-blur border border-slate-700 rounded-xl p-5 shadow-lg">
-      <label class="block text-sm font-semibold text-slate-300 mb-2">이슈 주제 또는 뉴스를 입력하세요</label>
-      <div class="flex flex-col sm:flex-row gap-3">
-        <input type="text" id="topicInput" placeholder="예: 25년 사실혼 관계 남편 사망 후 퇴거 요구받은 아내 사연" 
-               class="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
-        <button onclick="generateContent()" id="generateBtn" 
-                class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-lg transition-all flex items-center justify-center gap-2 whitespace-nowrap">
-          <i class="fa-solid fa-wand-magic-sparkles"></i> AI 콘텐츠 생성
-        </button>
-      </div>
+    <!-- 입력 폼 (여러 줄 입력 창으로 변경) -->
+    <section class="bg-slate-800/80 backdrop-blur border border-slate-700 rounded-xl p-5 shadow-lg space-y-3">
+      <label class="block text-sm font-semibold text-slate-300">
+        이슈 주제, 뉴스 기사 전문, 사연을 입력하거나 붙여넣으세요
+      </label>
+      
+      <!-- 넓은 여러 줄 텍스트 창 -->
+      <textarea id="topicInput" rows="6" 
+                placeholder="뉴스 기사 전문, 긴 사연, 이슈 내용을 편하게 통째로 붙여넣으세요." 
+                class="w-full bg-slate-900 border border-slate-700 rounded-lg p-4 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 resize-y leading-relaxed text-sm md:text-base"></textarea>
+      
+      <button onclick="generateContent()" id="generateBtn" 
+              class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-lg transition-all flex items-center justify-center gap-2 text-base shadow-md">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> AI 콘텐츠 생성하기
+      </button>
     </section>
 
     <!-- 로딩 스피너 -->
@@ -113,15 +117,12 @@
 
   <script>
     function switchTab(tabName) {
-      // 모든 탭 콘텐츠 숨기기
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      // 모든 탭 버튼 비활성화
       document.querySelectorAll('.tab-btn').forEach(el => {
         el.classList.remove('active');
         el.classList.add('bg-slate-800', 'text-slate-400');
       });
 
-      // 선택한 탭 보이기 및 버튼 활성화
       document.getElementById('content-' + tabName).classList.remove('hidden');
       const activeBtn = document.getElementById('tab-' + tabName);
       activeBtn.classList.add('active');
@@ -131,7 +132,7 @@
     async function generateContent() {
       const topic = document.getElementById('topicInput').value.trim();
       if (!topic) {
-        alert('이슈 주제를 입력해 주세요!');
+        alert('이슈 주제나 기사 내용을 입력해 주세요!');
         return;
       }
 
@@ -159,7 +160,7 @@
         document.getElementById('hashtagsText').innerText = data.hashtags || '';
 
         document.getElementById('resultSection').classList.remove('hidden');
-        switchTab('script'); // 기본으로 대본 탭 선택
+        switchTab('script');
 
       } catch (err) {
         alert('요청 처리 중 오류가 발생했습니다: ' + err.message);
