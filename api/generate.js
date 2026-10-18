@@ -25,8 +25,8 @@ export default async function handler(req, res) {
 `;
 
   try {
-    // gemini-1.5-flash-latest 엔드포인트 적용
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`, {
+    // 가장 최신의 gemini-2.5-flash 엔드포인트 적용
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -39,6 +39,10 @@ export default async function handler(req, res) {
 
     if (result.error) {
       return res.status(500).json({ error: result.error.message });
+    }
+
+    if (!result.candidates || result.candidates.length === 0) {
+      return res.status(500).json({ error: 'Gemini API 응답 형식이 올바르지 않습니다.' });
     }
 
     const textResult = result.candidates[0].content.parts[0].text;
