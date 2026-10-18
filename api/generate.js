@@ -25,8 +25,8 @@ export default async function handler(req, res) {
 `;
 
   try {
-    // 가장 표준적인 Gemini API v1beta 호출 주소입니다.
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+    // 최신 gemini-2.0-flash 모델 엔드포인트 적용
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
